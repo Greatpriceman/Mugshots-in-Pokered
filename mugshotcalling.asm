@@ -33,3 +33,16 @@ QMMugshot::
 	call LoadQMMugshot
 	call MugshotLOAD_2
 	ret
+	
+	
+;	Use in main.asm or elsewhere
+SECTION "mugshots",ROMX,BANK[$30]
+INCLUDE "mugshotcalling.asm"
+QMMug:		INCBIN "mugshot/QuestionMark.2bpp"
+LoadQMMugshot::
+	ld hl, QMMug
+	ld de, vChars1 + $400
+	ld bc, $100
+	ld a, BANK(QMMug)
+	call FarCopyData2
+	ret
